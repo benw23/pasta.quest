@@ -105,7 +105,7 @@ class Game {
             let [x, y] = p.get_coords();
 
             let num_sauces = this.sauces.length;
-            this.sauces = this.sauces.filter((s) => s.distance(this.head) > 0.1);
+            this.sauces = this.sauces.filter((s) => s.distance(p) > 0.1);
 
             if(this.sauces.length < num_sauces) {
                 this.length += 1;
