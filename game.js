@@ -52,7 +52,7 @@ class Game {
         this.width = 24;
         this.height = 24;
 
-        this.grid_size = 20;
+        this.grid_size = 40;
 
         this.state = "running";
         this.speed = 250;
@@ -82,7 +82,7 @@ class Game {
 
     render_sauce() {
         ctx.fillStyle = "#fff";
-        ctx.font = "20px serif";
+        ctx.font = this.grid_size.toString() + "px serif";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         this.sauces.forEach((sauce) => {
@@ -95,7 +95,7 @@ class Game {
         ctx.strokeStyle = "#d69f30";
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.lineWidth = 5;
+        ctx.lineWidth = this.grid_size/5;
 
         let p = this.tail.clone();
 
@@ -103,6 +103,18 @@ class Game {
 
         for (let i = 0; i < this.noodle.length; i++) {
             let [x, y] = p.get_coords();
+
+            let num_sauces = this.sauces.length;
+            this.sauces = this.sauces.filter((s) => s.distance(this.head) > 0.1);
+
+            if(this.sauces.length < num_sauces) {
+                this.length += 1;
+                this.speed*=0.95
+                this.add_sauce();
+                console.log(this.sauces)
+                console.log(this.head.get_coords());
+            }
+
             ctx.moveTo((x+0.5)*this.grid_size, (y+0.5)*this.grid_size);
             if(this.move(p, this.noodle[i])) {
                 this.move(p, (this.noodle[i]+2)%4);
@@ -188,18 +200,6 @@ class Game {
         this.noodle.push(this.direction);
         this.move(this.head, this.direction);
 
-        let num_sauces = this.sauces.length;
-        
-        this.sauces = this.sauces.filter((s) => s.distance(this.head) > 0.1);
-
-        if(this.sauces.length < num_sauces) {
-            this.length += 1;
-            this.speed*=0.95
-            this.add_sauce();
-            console.log(this.sauces)
-            console.log(this.head.get_coords());
-        }
-
         if(this.noodle.length > this.length) {
             this.move(this.tail, this.noodle.shift());
         }
@@ -239,7 +239,7 @@ class Game {
 const ctx = document.getElementById("game").getContext("2d");
 const game = new Game();
 
-for(let i = 0; i < 2; i++) {
+for(let i = 0; i < 3; i++) {
     game.add_sauce();
 }
 
