@@ -202,6 +202,10 @@ class Game {
             this.update_noodle();
             this.lastTick = Date.now();
         }
+
+        if(dt/this.speed >= 1) {
+            this.render();
+        }
     }
 
     update_noodle() {
@@ -225,7 +229,7 @@ class Game {
 
     tick() {
         this.update();
-        this.render();
+        //this.render();
         window.requestAnimationFrame(()=>this.tick())
     }
 
