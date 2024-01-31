@@ -104,15 +104,6 @@ class Game {
         for (let i = 0; i < this.noodle.length; i++) {
             let [x, y] = p.get_coords();
 
-            let num_sauces = this.sauces.length;
-            this.sauces = this.sauces.filter((s) => s.distance(p) > 0.1);
-
-            if(this.sauces.length < num_sauces) {
-                this.length += 1;
-                this.speed*=0.95
-                this.add_sauce();
-            }
-
             ctx.moveTo((x+0.5)*this.grid_size, (y+0.5)*this.grid_size);
             if(this.move(p, this.noodle[i])) {
                 this.move(p, (this.noodle[i]+2)%4);
@@ -130,6 +121,15 @@ class Game {
             } else {
                 [x, y] = p.get_coords();
                 ctx.lineTo((x+0.5)*this.grid_size, (y+0.5)*this.grid_size);
+            }
+
+            let num_sauces = this.sauces.length;
+            this.sauces = this.sauces.filter((s) => s.distance(p) > 0.1);
+
+            if(this.sauces.length < num_sauces) { // pasta intersection check
+                this.length += 1;
+                this.speed*=0.95
+                this.add_sauce();
             }
         };
 
