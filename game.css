@@ -9,3 +9,9 @@ body {
     width: 500px;
     height: 500px;
 }
+
+@media (width <= 600px) {
+    #game {
+        width: 95%;
+    }
+}
