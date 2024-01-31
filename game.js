@@ -111,8 +111,6 @@ class Game {
                 this.length += 1;
                 this.speed*=0.95
                 this.add_sauce();
-                console.log(this.sauces)
-                console.log(this.head.get_coords());
             }
 
             ctx.moveTo((x+0.5)*this.grid_size, (y+0.5)*this.grid_size);
