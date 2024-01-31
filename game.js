@@ -52,7 +52,7 @@ class Game {
         this.width = 24;
         this.height = 24;
 
-        this.grid_size = 40;
+        this.grid_size = 56;
 
         this.state = "running";
         this.speed = 250;

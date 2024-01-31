@@ -6,10 +6,10 @@ body {
 }
 
 #game {
-    width: 500px;
+    width: 700px;
 }
 
-@media (width <= 600px) {
+@media (width <= 650px) {
     #game {
         width: 95%;
     }
