@@ -73,6 +73,25 @@ class Game {
         } else {
             this.sauces.push(p);
         }
+        this.check_intersection();
+    }
+
+    check_intersection() {
+        let num_sauces = this.sauces.length;
+        let p = this.tail.clone();
+
+        for (let i = 0; i < this.noodle.length; i++) {
+            let [x, y] = p.get_coords();
+            this.sauces = this.sauces.filter((s) => s.distance(p) > 0.1);
+            this.move(p, this.noodle[i])
+        };
+
+        for(let i = 0; i < num_sauces - this.sauces.length; i++) {
+            this.length += 1;
+            this.speed*=0.95;
+            this.speed+=2;
+            this.add_sauce();
+        };
     }
 
     render_board() {
@@ -121,15 +140,6 @@ class Game {
             } else {
                 [x, y] = p.get_coords();
                 ctx.lineTo((x+0.5)*this.grid_size, (y+0.5)*this.grid_size);
-            }
-
-            let num_sauces = this.sauces.length;
-            this.sauces = this.sauces.filter((s) => s.distance(p) > 0.1);
-
-            if(this.sauces.length < num_sauces) { // pasta intersection check
-                this.length += 1;
-                this.speed*=0.95
-                this.add_sauce();
             }
         };
 
@@ -200,6 +210,16 @@ class Game {
 
         if(this.noodle.length > this.length) {
             this.move(this.tail, this.noodle.shift());
+        }
+
+        let num_sauces = this.sauces.length;
+        this.sauces = this.sauces.filter((s) => s.distance(this.head) > 0.1);
+
+        if(this.sauces.length < num_sauces) {
+            this.length += 1;
+            this.speed*=0.95;
+            this.speed+=2;
+            this.add_sauce();
         }
     }
 
